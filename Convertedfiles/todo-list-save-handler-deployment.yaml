@@ -30,15 +30,12 @@ spec:
           name: todo-list-save-handler
           resources: {}
           volumeMounts:
-            - mountPath: /app/config/config.json
+            - mountPath: "/app/config"
               name: appsettings
               subPath: config.json
       restartPolicy: Always
       volumes:
-        - configMap:
-            items:
-              - key: config.json
-                path: config.json
+        - name: appsettings
+          configMap:
             name: appsettings
-          name: appsettings
 status: {}
