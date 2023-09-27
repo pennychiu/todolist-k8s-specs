@@ -6,14 +6,16 @@ metadata:
     kompose.version: 1.30.0 (9d8dcb518)
   creationTimestamp: null
   labels:
-    io.kompose.service: todo-list-save-handler
-  name: todo-list-save-handler
+    io.kompose.service: todo-queue
+    azure.azureauthority.in: todo-list-app
+    app: todo-list
+  name: todo-queue
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      io.kompose.service: todo-list-save-handler
+      io.kompose.service: todo-queue
   strategy: {}
   template:
     metadata:
@@ -22,20 +24,16 @@ spec:
         kompose.version: 1.30.0 (9d8dcb518)
       creationTimestamp: null
       labels:
-        io.kompose.network/convertedfiles-default: "true"
-        io.kompose.service: todo-list-save-handler
+        io.kompose.network/composedfiles-default: "true"
+        io.kompose.service: todo-queue
     spec:
       containers:
-        - image: b97606012/todo-list-save-handler:1.0
-          name: todo-list-save-handler
+        - image: redis:6.2-alpine
+          name: todo-queue
+          ports:
+            - containerPort: 6379
+              hostPort: 6379
+              protocol: TCP
           resources: {}
-          volumeMounts:
-            - mountPath: "/app/config"
-              name: appsettings
-              readOnly: true
       restartPolicy: Always
-      volumes:
-        - name: appsettings
-          configMap:
-            name: appsettings
 status: {}

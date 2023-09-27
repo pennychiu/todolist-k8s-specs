@@ -6,16 +6,17 @@ metadata:
     kompose.version: 1.30.0 (9d8dcb518)
   creationTimestamp: null
   labels:
-    io.kompose.service: todo-list-web
-  name: todo-list-web
+    io.kompose.service: todo-db
+    azure.azureauthority.in: todo-list-app
+    app: todo-list
+  name: todo-db
   namespace: default
 spec:
   ports:
-    - name: "8099"
-      port: 8099
-      targetPort: 80
-  type: LoadBalancer
+    - name: "1433"
+      port: 1433
+      targetPort: 1433
   selector:
-    io.kompose.service: todo-list-web
+    io.kompose.service: todo-db
 status:
   loadBalancer: {}
